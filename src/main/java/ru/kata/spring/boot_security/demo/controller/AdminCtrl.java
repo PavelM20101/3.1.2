@@ -8,14 +8,11 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
 import ru.kata.spring.boot_security.demo.entity.Role;
 import ru.kata.spring.boot_security.demo.entity.User;
 import ru.kata.spring.boot_security.demo.service.RoleService;
 import ru.kata.spring.boot_security.demo.service.UserService;
 
-import java.util.Collections;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -51,14 +48,6 @@ public class AdminCtrl {
         return "user-info";
     }
 
-//    @PostMapping("saveUser")
-//    public String saveUser(@ModelAttribute("user") User user, @RequestParam("role") String roleName) {
-//        Role role = roleService.getRoleByName(roleName);
-//        Set<Role> roles = new HashSet<>(Collections.singletonList(role));
-//        user.setRoles(roles);
-//        userService.createOrUpdateUser(user);
-//        return "redirect:/admin/users";
-//    }
 
     @PostMapping("saveUser")
     public String saveUser(@ModelAttribute("user") User user, @RequestParam("roles") List<String> roleNames) {
