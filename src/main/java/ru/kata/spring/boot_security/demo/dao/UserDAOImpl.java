@@ -20,13 +20,16 @@ public class UserDAOImpl implements UserDAO {
 
     @Override
     public User getUserByUsername(String username) {
-        return entityManager.createQuery("from User where username =:username", User.class).setParameter("username", username).getSingleResult();
+        return entityManager.createQuery(
+                        "FROM User u LEFT JOIN FETCH u.roles WHERE u.username = :username", User.class)
+                .setParameter("username", username)
+                .getSingleResult();
     }
 
     @Override
     public User getUserByEmail(String email) {
         return entityManager.createQuery(
-                        "FROM User WHERE email =:email", User.class)
+                        "FROM User u LEFT JOIN FETCH u.roles WHERE u.email = :email", User.class)
                 .setParameter("email", email)
                 .getSingleResult();
     }
@@ -60,6 +63,6 @@ public class UserDAOImpl implements UserDAO {
 
     @Override
     public List<User> getAllUsers() {
-        return entityManager.createQuery("from User", User.class).getResultList();
+        return entityManager.createQuery("FROM User u LEFT JOIN FETCH u.roles", User.class).getResultList();
     }
 }

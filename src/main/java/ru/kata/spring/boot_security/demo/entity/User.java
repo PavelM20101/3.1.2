@@ -42,7 +42,7 @@ public class User implements UserDetails {
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id")
     )
-    @Fetch(FetchMode.JOIN)
+//    @Fetch(FetchMode.JOIN)
     private Set<Role> roles;
 
     @Column(name = "email")
