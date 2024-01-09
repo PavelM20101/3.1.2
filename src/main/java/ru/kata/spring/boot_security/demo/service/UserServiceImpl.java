@@ -13,7 +13,6 @@ import ru.kata.spring.boot_security.demo.entity.User;
 import java.util.List;
 
 @Service
-@Transactional
 public class UserServiceImpl implements UserService, UserDetailsService {
 
     private UserDAO userDao;
@@ -41,26 +40,24 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     }
 
     @Override
-    public User getUserByEmail(String email) {
-        return userDao.getUserByEmail(email);
-    }
-
-    @Override
-    public void deleteUser(int id) {
+    @Transactional
+    public void deleteUser(Long id) {
         userDao.deleteUser(id);
     }
 
     @Override
-    public User getUser(int id) {
+    public User getUser(Long id) {
         return userDao.getUser(id);
     }
 
     @Override
+    @Transactional
     public void updateUser(User user) {
         userDao.updateUser(user);
     }
 
     @Override
+    @Transactional
     public void createUser(User user) {
         userDao.createUser(user);
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
@@ -72,6 +69,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     }
 
     @Override
+    @Transactional
     public void createOrUpdateUser(User user) {
         if (user.getId() == 0) {
             this.createUser(user);
