@@ -26,13 +26,6 @@ public class UserDAOImpl implements UserDAO {
                 .getSingleResult();
     }
 
-    @Override
-    public User getUserByEmail(String email) {
-        return entityManager.createQuery(
-                        "FROM User u LEFT JOIN FETCH u.roles WHERE u.email = :email", User.class)
-                .setParameter("email", email)
-                .getSingleResult();
-    }
 
     @Override
     public void deleteUser(Long id) {

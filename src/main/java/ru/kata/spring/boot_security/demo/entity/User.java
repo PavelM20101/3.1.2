@@ -1,7 +1,5 @@
 package ru.kata.spring.boot_security.demo.entity;
 
-import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.FetchMode;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -18,7 +16,6 @@ import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 import java.util.Collection;
-import java.util.Objects;
 import java.util.Set;
 
 @Entity
@@ -28,7 +25,7 @@ public class User implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    private Long id;
+    private long id;
 
     @Column(name = "username")
     private String username;
@@ -42,7 +39,6 @@ public class User implements UserDetails {
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id")
     )
-//    @Fetch(FetchMode.JOIN)
     private Set<Role> roles;
 
     @Column(name = "email")
@@ -105,6 +101,14 @@ public class User implements UserDetails {
         return id;
     }
 
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
     public void setPassword(String password) {
         this.password = password;
     }
@@ -113,6 +117,9 @@ public class User implements UserDetails {
         return passwordConfirm;
     }
 
+    public void setPasswordConfirm(String passwordConfirm) {
+        this.passwordConfirm = passwordConfirm;
+    }
 
     public Set<Role> getRoles() {
         return roles;
@@ -126,16 +133,7 @@ public class User implements UserDetails {
         return email;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof User)) return false;
-        User user = (User) o;
-        return Objects.equals(getId(), user.getId()) && Objects.equals(getUsername(), user.getUsername()) && Objects.equals(getPassword(), user.getPassword()) && Objects.equals(getPasswordConfirm(), user.getPasswordConfirm()) && Objects.equals(getRoles(), user.getRoles()) && Objects.equals(getEmail(), user.getEmail());
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(getId(), getUsername(), getPassword(), getPasswordConfirm(), getRoles(), getEmail());
+    public void setEmail(String email) {
+        this.email = email;
     }
 }

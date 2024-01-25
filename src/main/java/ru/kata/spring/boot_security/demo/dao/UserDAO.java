@@ -7,7 +7,6 @@ import java.util.List;
 public interface UserDAO {
     User getUserByUsername(String username);
 
-    User getUserByEmail(String email);
 
     void deleteUser(Long id);
 

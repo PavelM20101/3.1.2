@@ -13,7 +13,7 @@ import ru.kata.spring.boot_security.demo.entity.User;
 import ru.kata.spring.boot_security.demo.service.RoleService;
 import ru.kata.spring.boot_security.demo.service.UserService;
 
-import java.util.Arrays;
+import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -43,15 +43,16 @@ public class AdminCtrl {
     @GetMapping("addNewUser")
     public String addNewUser(Model model) {
         User user = new User();
+
         model.addAttribute("user", user);
         model.addAttribute("roles", roleService.getAllRoles());
         return "user-info";
     }
 
     @PostMapping("saveUser")
-    public String saveUser(@ModelAttribute("user") User user, @RequestParam("roles") String[] roleNames) {
-        Set<Role> roles = Arrays.stream(roleNames)
-                .map(roleName -> roleService.getRoleByName(roleName))
+    public String saveUser(@ModelAttribute("user") User user, @RequestParam("roles") List<String> roleNames) {
+        Set<Role> roles = roleNames.stream()
+                .map(roleService::getRoleByName)
                 .collect(Collectors.toSet());
 
         user.setRoles(roles);
